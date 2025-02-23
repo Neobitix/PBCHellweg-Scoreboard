@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tisch</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        function updateScore(change) {
+            fetch("/update_score", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ table_id: "{{ table_id }}", change: change })
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Punktestand für {{ table_id }}</h1>
+    <button onclick="updateScore(1)" style="font-size: 20px;">+1</button>
+    <button onclick="updateScore(-1)" style="font-size: 20px;">-1</button>
+</body>
+</html>
+

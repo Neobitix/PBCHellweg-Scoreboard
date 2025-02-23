@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tisch Punktestand</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #333;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            justify-content: center;
+        }
+        .header {
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .clock {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .scoreboard {
+            display: flex;
+            justify-content: space-around;
+            width: 80%;
+            max-width: 800px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+        .team {
+            flex: 1;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .team.heim {
+            background-color: #28a745;
+        }
+        .team.gaste {
+            background-color: #dc3545;
+        }
+        .team h2 {
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+        .score {
+            font-size: 80px;
+            font-weight: bold;
+            transition: transform 0.2s ease, color 0.3s ease;
+        }
+        .highlight {
+            transform: scale(1.3);
+            color: yellow;
+        }
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        button {
+            font-size: 26px;
+            padding: 20px 50px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.1s;
+        }
+        button:active {
+            transform: scale(0.95);
+        }
+        .plus {
+            background-color: #17a2b8;
+            color: white;
+        }
+        .minus {
+            background-color: #ffc107;
+            color: black;
+        }
+        .reset-button {
+            margin-top: 30px;
+            font-size: 28px;
+            background-color: #ff5722;
+            color: white;
+            padding: 20px 50px;
+            border-radius: 12px;
+            transition: background-color 0.3s ease, transform 0.1s;
+        }
+        .reset-button:hover {
+            background-color: #e64a19;
+        }
+        @keyframes winnerEffect {
+            0% { background-color: gold; color: black; }
+            50% { background-color: yellow; color: black; }
+            100% { background-color: gold; color: black; }
+        }
+        .winner-message {
+            font-size: 32px;
+            font-weight: bold;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+    <script>
+        const socket = io();
+        const tischId = "{{ tisch }}";
+
+        function updateScore(team, change) {
+            fetch("/update_score", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ tisch: tischId, team: team, change: change })
+            }).then(response => response.json()).then(data => {
+                if (data.success) {
+                    let scoreElement = document.getElementById(`${team}-score`);
+                    scoreElement.innerText = data.scores[tischId + `_${team}`] ?? 0;
+                    scoreElement.classList.add("highlight");
+                    setTimeout(() => scoreElement.classList.remove("highlight"), 500);
+                }
+            }).catch(error => console.error("Fehler beim Aktualisieren des Scores:", error));
+        }
+
+        function resetScores() {
+            let heimScore = parseInt(document.getElementById("heim-score").innerText);
+            let gasteScore = parseInt(document.getElementById("gaste-score").innerText);
+            let winner = heimScore > gasteScore ? "Heim" : heimScore < gasteScore ? "Gäste" : "Unentschieden";
+            
+            fetch("/reset_scores", { method: "POST" }).then(() => {
+                document.getElementById("heim-score").innerText = 0;
+                document.getElementById("gaste-score").innerText = 0;
+                document.body.style.animation = "winnerEffect 1s ease-in-out 3";
+                document.getElementById("winner-message").innerText = winner + " hat gewonnen!";
+                document.getElementById("winner-message").style.display = "block";
+                setTimeout(() => {
+                    document.body.style.animation = "none";
+                    document.getElementById("winner-message").style.display = "none";
+                }, 3000);
+            });
+        }
+
+        function updateClock() {
+            const now = new Date();
+            document.getElementById("clock").innerText = now.toLocaleTimeString("de-DE");
+        }
+        setInterval(updateClock, 1000);
+    </script>
+</head>
+<body>
+    <div class="header">
+        <h1>Punktestand für {{ tisch }}</h1>
+    </div>
+    <div class="clock" id="clock">--:--:--</div>
+    <div class="scoreboard">
+        <div class="team heim">
+            <h2>Heim</h2>
+            <div class="score" id="heim-score">0</div>
+            <div class="buttons">
+                <button class="plus" onclick="updateScore('heim', 1)">+1</button>
+                <button class="minus" onclick="updateScore('heim', -1)">-1</button>
+            </div>
+        </div>
+        <div class="team gaste">
+            <h2>Gäste</h2>
+            <div class="score" id="gaste-score">0</div>
+            <div class="buttons">
+                <button class="plus" onclick="updateScore('gaste', 1)">+1</button>
+                <button class="minus" onclick="updateScore('gaste', -1)">-1</button>
+            </div>
+        </div>
+    </div>
+    <button class="reset-button" onclick="resetScores()">Punkte zurücksetzen</button>
+    <div class="winner-message" id="winner-message"></div>
+</body>
+</html>
+
