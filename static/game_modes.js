@@ -15,6 +15,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ mode: selectedMode })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Mode updated successfully:", data);
+        })
+        .catch(error => {
+            console.error("Error updating mode:", error);
         });
     });
 
@@ -24,5 +31,9 @@ document.addEventListener("DOMContentLoaded", function () {
             if (data.mode) {
                 modeSelector.value = data.mode;
             }
+        })
+        .catch(error => {
+            console.error("Error fetching mode:", error);
         });
 });
+
