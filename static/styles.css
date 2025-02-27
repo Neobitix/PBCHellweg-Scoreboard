@@ -1,0 +1,106 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: url('/static/billard-background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-between;
+}
+
+.header {
+    padding: 15px;
+    font-size: 32px;
+    font-weight: bold;
+    background-color: rgba(0, 32, 70, 0.9);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.header img {
+    height: 50px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.scoreboard {
+    display: flex;
+    justify-content: space-around;
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+}
+
+.team {
+    flex: 1;
+    text-align: center;
+    padding: 20px;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.heim {
+    background-color: #28a745;
+    border-radius: 10px;
+}
+
+.gast {
+    background-color: #dc3545;
+    border-radius: 10px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+button {
+    font-size: 20px;
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+select {
+    font-size: 18px;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 5px;
+}
+
+.footer {
+    padding: 12px;
+    background-color: #28a745;
+    font-size: 20px;
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
