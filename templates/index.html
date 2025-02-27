@@ -3,77 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - PBCHellweg Scoreboard</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background: url('/static/billard-background.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .login-container {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 30px;
-            border-radius: 10px;
-            width: 350px;
-            text-align: center;
-        }
-        .login-container img {
-            width: 80px;
-            margin-bottom: 15px;
-        }
-        .login-container h2 {
-            margin-bottom: 20px;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        .login-btn {
-            background-color: #28a745;
-            color: white;
-            font-size: 18px;
-            padding: 10px;
-            border: none;
-            width: 100%;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .login-btn:hover {
-            background-color: #218838;
-        }
-    </style>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            if (localStorage.getItem("loggedIn") === "true") {
-                window.location.href = "/dashboard";
-            }
-        });
-        function login(event) {
-            event.preventDefault();
-            localStorage.setItem("loggedIn", "true");
-            window.location.href = "/dashboard";
-        }
-    </script>
+    <title>PBC Scoreboard</title>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-    <div class="login-container">
-        <img src="/static/WappenTransparent.png" alt="Vereinswappen">
-        <h2>PBCHellweg Scoreboard</h2>
-        <form onsubmit="login(event)">
-            <input type="password" placeholder="Passwort eingeben" required>
-            <button type="submit" class="login-btn">Login</button>
-        </form>
+    <!-- Vereinswappen oben links -->
+    <img id="verein-wappen" src="/static/WappenTransparent.png" alt="Vereinswappen">
+
+    <div class="container">
+        <h1>PBC Scoreboard</h1>
+        <p>Willkommen zum offiziellen Scoreboard des PBC Hellweg.</p>
+
+        <div class="menu">
+            <a href="/dashboard">Zum Dashboard</a>
+            <a href="/gemeinschaft">Gemeinschaftsansicht</a>
+            <a href="/pbc_scoreboard">Tischansichten</a>
+        </div>
     </div>
 </body>
 </html>

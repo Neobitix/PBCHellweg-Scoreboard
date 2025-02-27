@@ -1,14 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
     const modeSelector = document.getElementById("spielmodus");
-    
+    const modeDisplay = document.getElementById("spielmodus-anzeige");
+
     if (localStorage.getItem("selectedMode")) {
         modeSelector.value = localStorage.getItem("selectedMode");
+        modeDisplay.textContent = localStorage.getItem("selectedMode");
     }
     
     modeSelector.addEventListener("change", function () {
         const selectedMode = modeSelector.value;
         localStorage.setItem("selectedMode", selectedMode);
-        
+        modeDisplay.textContent = selectedMode;
+
         fetch("/update_mode", {
             method: "POST",
             headers: {
@@ -30,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             if (data.mode) {
                 modeSelector.value = data.mode;
+                modeDisplay.textContent = data.mode;
             }
         })
         .catch(error => {

@@ -3,147 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Punktestand Tisch</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background: url('/static/billard_background.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: white;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            justify-content: space-between;
-        }
-        .header {
-            padding: 10px;
-            font-size: 28px;
-            font-weight: bold;
-            background-color: rgba(0, 32, 70, 0.9);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .header img {
-            height: 40px;
-            margin-right: 10px;
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            flex-grow: 1;
-        }
-        .scoreboard {
-            display: flex;
-            justify-content: space-around;
-            width: 90%;
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 10px;
-        }
-        .team {
-            flex: 1;
-            text-align: center;
-            padding: 20px;
-            font-size: 40px;
-            font-weight: bold;
-        }
-        .heim {
-            background-color: #28a745;
-            border-radius: 10px;
-        }
-        .gast {
-            background-color: #dc3545;
-            border-radius: 10px;
-        }
-        .buttons {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-        }
-        button {
-            font-size: 20px;
-            margin: 5px;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            background-color: white;
-            color: black;
-        }
-        button:hover {
-            opacity: 0.8;
-        }
-        select {
-            font-size: 18px;
-            padding: 10px;
-            margin-top: 15px;
-            border-radius: 5px;
-        }
-        .footer {
-            padding: 12px;
-            background-color: #28a745;
-            font-size: 20px;
-        }
-        .footer a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-        }
-    </style>
-    <script>
-        const socket = io();
-        socket.on("update_scores", (scores) => {
-            document.getElementById("heim-score").innerText = scores.heim ?? 0;
-            document.getElementById("gast-score").innerText = scores.gast ?? 0;
-        });
-        function updateScore(team, value) {
-            socket.emit("update_score", { team, value });
-        }
-    </script>
+    <title>PBC Scoreboard</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="/static/game_modes.js" defer></script>
+    <script src="/static/score_update.js" defer></script>
 </head>
 <body>
-    <div class="header">
-        <img src="/static/WappenTransparent.png" alt="Vereinswappen">
-        Punktestand für Tisch
-    </div>
+    <img id="verein-wappen" src="/static/WappenTransparent.png" alt="Vereinswappen">
     <div class="container">
-        <select id="spielmodus">
-            <option value="8-Ball">8-Ball</option>
-            <option value="9-Ball">9-Ball</option>
-            <option value="10-Ball">10-Ball</option>
-            <option value="14/1">14/1 Endlos</option>
-        </select>
-        <div class="scoreboard">
-            <div class="team heim">
-                Heim
-                <div id="heim-score">0</div>
-                <div class="buttons">
-                    <button onclick="updateScore('heim', 1)">+1</button>
-                    <button onclick="updateScore('heim', -1)">-1</button>
-                </div>
+        <h1>PBC Scoreboard</h1>
+        <p>Spielmodus: <span id="spielmodus-anzeige">Standard</span></p>
+
+        <div class="grid-container">
+            <div class="tisch" id="tisch1">
+                <h2>Tisch 1</h2>
+                <p>Heim: <span id="heim-t1">0</span> | Gast: <span id="gast-t1">0</span></p>
+                <button onclick="updateScore('heim-t1', 1)">+1 Heim</button>
+                <button onclick="updateScore('heim-t1', -1)">-1 Heim</button>
+                <button onclick="updateScore('gast-t1', 1)">+1 Gast</button>
+                <button onclick="updateScore('gast-t1', -1)">-1 Gast</button>
             </div>
-            <div class="team gast">
-                Gast
-                <div id="gast-score">0</div>
-                <div class="buttons">
-                    <button onclick="updateScore('gast', 1)">+1</button>
-                    <button onclick="updateScore('gast', -1)">-1</button>
-                </div>
+            <div class="tisch" id="tisch2">
+                <h2>Tisch 2</h2>
+                <p>Heim: <span id="heim-t2">0</span> | Gast: <span id="gast-t2">0</span></p>
+                <button onclick="updateScore('heim-t2', 1)">+1 Heim</button>
+                <button onclick="updateScore('heim-t2', -1)">-1 Heim</button>
+                <button onclick="updateScore('gast-t2', 1)">+1 Gast</button>
+                <button onclick="updateScore('gast-t2', -1)">-1 Gast</button>
+            </div>
+            <div class="tisch" id="tisch3">
+                <h2>Tisch 3</h2>
+                <p>Heim: <span id="heim-t3">0</span> | Gast: <span id="gast-t3">0</span></p>
+                <button onclick="updateScore('heim-t3', 1)">+1 Heim</button>
+                <button onclick="updateScore('heim-t3', -1)">-1 Heim</button>
+                <button onclick="updateScore('gast-t3', 1)">+1 Gast</button>
+                <button onclick="updateScore('gast-t3', -1)">-1 Gast</button>
+            </div>
+            <div class="tisch" id="tisch4">
+                <h2>Tisch 4</h2>
+                <p>Heim: <span id="heim-t4">0</span> | Gast: <span id="gast-t4">0</span></p>
+                <button onclick="updateScore('heim-t4', 1)">+1 Heim</button>
+                <button onclick="updateScore('heim-t4', -1)">-1 Heim</button>
+                <button onclick="updateScore('gast-t4', 1)">+1 Gast</button>
+                <button onclick="updateScore('gast-t4', -1)">-1 Gast</button>
             </div>
         </div>
-    </div>
-    <div class="footer">
-        <a href="https://pbchellweg.de/" target="_blank">Besuche unsere Website: www.PBCHellweg.de</a>
     </div>
 </body>
 </html>

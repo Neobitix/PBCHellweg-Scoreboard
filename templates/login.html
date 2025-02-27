@@ -3,18 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login | PBC Scoreboard</title>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-    <h2>Login</h2>
-    <form action="/login" method="post">
-        <label for="username">Benutzername:</label>
-        <input type="text" id="username" name="username" required>
-        
-        <label for="password">Passwort:</label>
-        <input type="password" id="password" name="password" required>
 
-        <button type="submit">Einloggen</button>
-    </form>
+    <!-- Vereinswappen oben links -->
+    <img id="verein-wappen" src="/static/WappenTransparent.png" alt="Vereinswappen">
+
+    <div class="login-container">
+        <h1>Login</h1>
+        <form id="login-form">
+            <label for="password">Passwort:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Einloggen</button>
+        </form>
+        <p id="error-message" style="color: red; display: none;">Falsches Passwort!</p>
+    </div>
+
+    <script>
+        document.getElementById("login-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const passwordInput = document.getElementById("password").value;
+
+            if (passwordInput === "billard2024") {
+                localStorage.setItem("authenticated", "true"); // Speichert den Login dauerhaft
+                window.location.href = "/dashboard"; // Weiterleitung zur Hauptseite
+            } else {
+                document.getElementById("error-message").style.display = "block";
+            }
+        });
+
+        // Falls der Benutzer bereits eingeloggt ist, direkt weiterleiten
+        if (localStorage.getItem("authenticated") === "true") {
+            window.location.href = "/dashboard";
+        }
+    </script>
+
 </body>
 </html>
+

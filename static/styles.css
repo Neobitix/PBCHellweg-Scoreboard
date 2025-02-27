@@ -1,106 +1,86 @@
+/* Allgemeine Stile */
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
-    background: url('/static/billard-background.jpg') no-repeat center center fixed;
+    background-image: url('/static/billard-background.jpg'); /* Dezent eingebrachtes Billard-Hintergrundbild */
     background-size: cover;
-    color: white;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #ffffff;
+    text-align: center;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    justify-content: space-between;
 }
 
-.header {
-    padding: 15px;
-    font-size: 32px;
+/* Vereinswappen einbinden */
+#verein-wappen {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 100px;
+    height: auto;
+}
+
+/* Score-Anzeige größer machen */
+.score {
+    font-size: 5rem; /* Deutlich größerer Score */
     font-weight: bold;
-    background-color: rgba(0, 32, 70, 0.9);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
+    color: #ffcc00;
+    text-shadow: 2px 2px 5px black;
 }
 
-.header img {
-    height: 50px;
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-}
-
-.scoreboard {
+/* Tische-Ansicht optimieren */
+.tisch-container {
     display: flex;
     justify-content: space-around;
-    width: 90%;
-    max-width: 600px;
-    margin: 20px auto;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.tisch {
+    background-color: rgba(0, 0, 0, 0.6);
     padding: 20px;
-    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
+    width: 250px;
+}
+
+.tisch h2 {
+    font-size: 2rem;
+    color: #ffcc00;
+}
+
+/* Spielmodi Auswahl */
+#spielmodus-container {
+    margin-top: 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 15px;
     border-radius: 10px;
 }
 
-.team {
-    flex: 1;
-    text-align: center;
-    padding: 20px;
-    font-size: 40px;
-    font-weight: bold;
+#spielmodus {
+    font-size: 1.5rem;
+    padding: 5px;
 }
 
-.heim {
-    background-color: #28a745;
-    border-radius: 10px;
-}
-
-.gast {
-    background-color: #dc3545;
-    border-radius: 10px;
-}
-
-.buttons {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-}
-
+/* Buttons */
 button {
-    font-size: 20px;
-    margin: 5px;
+    font-size: 1.5rem;
     padding: 10px 20px;
     border: none;
-    cursor: pointer;
+    background-color: #004d00;
+    color: white;
     border-radius: 5px;
-    background-color: white;
-    color: black;
+    cursor: pointer;
 }
 
 button:hover {
-    opacity: 0.8;
+    background-color: #008000;
 }
 
-select {
-    font-size: 18px;
-    padding: 10px;
-    margin-top: 15px;
-    border-radius: 5px;
-}
-
-.footer {
-    padding: 12px;
-    background-color: #28a745;
-    font-size: 20px;
-}
-
-.footer a {
-    color: white;
-    text-decoration: none;
+/* Gast statt Gäste */
+.gast {
+    font-size: 1.5rem;
     font-weight: bold;
+    color: white;
 }
+
