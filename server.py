@@ -3,6 +3,11 @@ from flask_session import Session
 from flask_socketio import SocketIO
 from datetime import timedelta
 import sqlite3
+import logging
+
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
+
 
 app = Flask(__name__)
 app.secret_key = "geheimes-passwort"
